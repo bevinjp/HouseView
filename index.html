@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f5f4">
+  <title>Residence | House study</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><span class="brand-icon"><i data-lucide="house"></i></span><div><h1>Residence <span>/ 01</span></h1><p>Ground + first floor</p></div></div>
+    <div class="header-meta"><span class="status-dot"></span> Plan-derived concept <span class="divider"></span> 4 bedrooms <span class="divider"></span> 2 levels</div>
+    <button class="icon-button" id="download" aria-label="Download current view" title="Download current view"><i data-lucide="download"></i></button>
+  </header>
+  <main>
+    <section class="viewport" aria-label="Interactive 3D house">
+      <div id="scene"></div>
+      <div class="scene-top">
+        <div class="segmented" aria-label="Floor view">
+          <button data-view="exterior" class="active" aria-pressed="true">Exterior</button>
+          <button data-view="ground" aria-pressed="false">Ground</button>
+          <button data-view="first" aria-pressed="false">First</button>
+          <button data-view="exploded" aria-pressed="false">Exploded</button>
+        </div>
+        <div class="view-heading"><span id="view-number">01 / EXTERIOR</span><h2 id="view-title">A home, in two levels.</h2></div>
+      </div>
+      <div class="camera-tools" aria-label="Camera controls">
+        <button class="icon-button" id="home-view" title="Reset view" aria-label="Reset view"><i data-lucide="rotate-ccw"></i></button>
+        <button class="icon-button" id="top-view" title="Top view" aria-label="Top view"><i data-lucide="scan"></i></button>
+        <button class="icon-button" id="front-view" title="North elevation" aria-label="North elevation"><i data-lucide="panel-top"></i></button>
+        <span></span>
+        <button class="icon-button" id="zoom-in" title="Zoom in" aria-label="Zoom in"><i data-lucide="plus"></i></button>
+        <button class="icon-button" id="zoom-out" title="Zoom out" aria-label="Zoom out"><i data-lucide="minus"></i></button>
+        <button class="icon-button" id="rotate" title="Auto rotate" aria-label="Auto rotate" aria-pressed="false"><i data-lucide="orbit"></i></button>
+      </div>
+      <div class="scene-bottom"><div class="north"><i data-lucide="navigation"></i><span>N / FRONT</span></div><div class="scale-note"><span class="scale-bar"></span> <span>Metres</span></div><span id="render-status">Loading model...</span></div>
+      <div id="scene-error" hidden>3D rendering is unavailable in this browser. The original drawings and design review are still available.</div>
+    </section>
+    <aside class="sidebar">
+      <nav class="tabs" aria-label="Study sections">
+        <button data-tab="model" class="active" aria-selected="true">Model</button>
+        <button data-tab="review" aria-selected="false">Review <span>8</span></button>
+        <button data-tab="plans" aria-selected="false">Drawings</button>
+      </nav>
+      <div id="panel-model" class="panel">
+        <div class="section-eyebrow">THE MODEL</div>
+        <h2 id="floor-title">Exterior study</h2>
+        <p class="muted" id="floor-description">Original footprint. Proposed exterior finishes.</p>
+        <div class="settings">
+          <label class="toggle-row"><span><i data-lucide="layers-2"></i> Roof</span><input id="roof" type="checkbox" checked role="switch"></label>
+          <label class="toggle-row"><span><i data-lucide="armchair"></i> Furniture</span><input id="furniture" type="checkbox" checked role="switch"></label>
+          <label class="toggle-row"><span><i data-lucide="tag"></i> Room labels</span><input id="labels" type="checkbox" role="switch"></label>
+          <label class="toggle-row"><span><i data-lucide="panel-top-open"></i> Proposed windows</span><input id="windows" type="checkbox" checked role="switch"></label>
+          <label class="slider-label" for="cutaway"><span>Wall cutaway</span><output id="cutaway-value">Full height</output></label>
+          <input id="cutaway" type="range" min="0.65" max="3" value="3" step="0.05">
+        </div>
+        <div class="finish-heading"><span class="section-eyebrow">MATERIAL STUDY</span><span id="finish-name">Chalk + sage</span></div>
+        <div class="swatches" aria-label="Exterior material">
+          <button class="swatch active" data-finish="sage" style="--swatch:#7d9285" aria-label="Chalk and sage finish" title="Chalk + sage" aria-pressed="true"></button>
+          <button class="swatch" data-finish="clay" style="--swatch:#af6c5d" aria-label="Chalk and clay finish" title="Chalk + clay" aria-pressed="false"></button>
+          <button class="swatch" data-finish="graphite" style="--swatch:#555c60" aria-label="Chalk and graphite finish" title="Chalk + graphite" aria-pressed="false"></button>
+        </div>
+        <div class="room-section"><div class="section-eyebrow">SPACES <span>PRINTED CLEAR DIMENSIONS</span></div><div id="rooms"></div></div>
+        <div id="room-detail" hidden></div>
+        <div class="notice"><i data-lucide="info"></i><p>Visualisation, not a construction model. Heights, windows, roof, stair profile and finishes are assumed. Undimensioned positions are traced.</p></div>
+      </div>
+      <div id="panel-review" class="panel" hidden>
+        <div class="section-eyebrow">SMALL CHANGES, BIG IMPACT</div><h2>Keep the plan.<br>Refine the details.</h2>
+        <p class="muted">Drawing-based observations, not a structural or building-code assessment.</p>
+        <div id="recommendations"></div>
+        <a class="text-link" href="./DESIGN-REVIEW.md" download><i data-lucide="file-down"></i> Download full review</a>
+      </div>
+      <div id="panel-plans" class="panel" hidden>
+        <div class="section-eyebrow">SOURCE OF TRUTH</div><h2>The original drawings</h2><p class="muted">All printed dimensions are in centimetres. North points towards the front / bottom of the sheets.</p>
+        <button class="plan-preview" data-plan="ground"><img src="./assets/ground.png" alt="Original ground-floor drawing"><span>Ground floor <i data-lucide="expand"></i></span></button>
+        <button class="plan-preview" data-plan="first"><img src="./assets/first.png" alt="Original first-floor drawing"><span>First floor <i data-lucide="expand"></i></span></button>
+        <div class="source-links"><a href="./assets/ground.pdf" target="_blank" rel="noopener">Ground PDF <i data-lucide="external-link"></i></a><a href="./assets/first.pdf" target="_blank" rel="noopener">First PDF <i data-lucide="external-link"></i></a></div>
+        <h3>Confidence & assumptions</h3>
+        <dl class="confidence"><dt>Printed dimensions</dt><dd>Room sizes, rear width 12.35 m, porch 3.39 x 4.18 m, balcony 2.39 x 1.50 m.</dd><dt>Traced from drawings</dt><dd>Wall thicknesses, door gaps, offsets, terrace outline and relative room positions. PDF linework is not survey data.</dd><dt>Not specified</dt><dd>3.00 m walls, 3.20 m floor-to-floor, 0.20 m slabs, 1.05 m parapets, flat roof, window sizes, glazing, cladding and stair treads are illustrative.</dd><dt>Unresolved</dt><dd>The 2.40 x 1.60 m upstairs room is unlabelled. The stair requires a dimensioned section. Door swings and window schedules are absent. First-floor title block says ground floor; the drawing heading identifies it as first floor.</dd><dt>Not modelled</dt><dd>Structure, foundations, services, site setbacks, accurate terrain and code compliance. Landscape is illustrative; daylight is not a sun study.</dd></dl>
+      </div>
+    </aside>
+  </main>
+  <dialog id="plan-dialog"><header><h2 id="plan-title">Original drawing</h2><button class="icon-button" id="close-plan" aria-label="Close drawing" title="Close drawing"><i data-lucide="x"></i></button></header><div class="plan-image-wrap"><img id="plan-image" alt="Full original architectural drawing"></div><label class="plan-zoom">Drawing zoom <input id="plan-zoom" type="range" min="100" max="250" value="100" step="25"></label></dialog>
+  <script src="./app.js"></script>
+</body>
+</html>
